@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 6.2 — TV Energy Consumption Filters</title>
+    <!-- Paths are relative to this page inside the html folder. -->
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/visualisation.css">
+</head>
+<body>
+    <header>
+        <h1>TV Energy Consumption</h1>
+    </header>
+    <main>
+        <div>
+            <h1>Energy Consumption for different TV screen types and sizes</h1>
+            <p>TVs vary considerably in energy consumption.</p>
+        </div>
+
+        <div id="filters_screen" role="group" aria-label="Filter TVs by screen technology"></div>
+        <div id="histogram" class="responsive-svg-container"></div>
+        <p id="chart-error" role="alert" hidden></p>
+        <noscript><p>Please enable JavaScript to display the histogram.</p></noscript>
+
+        <div class="body">
+            <h3>Data source</h3>
+            <p>
+                <a href="https://data.gov.au/data/dataset/energy-rating-for-household-appliances">
+                    Energy Rating Data for household appliances – Televisions
+                </a><br>
+                Downloaded Jan 2026
+            </p>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; Data Visualisation Week 6</p>
+    </footer>
+
+    <!-- Deferred scripts run in this order, after the page has been parsed. -->
+    <script defer src="https://d3js.org/d3.v7.min.js"></script>
+    <script defer src="../js/shared-constants.js"></script>
+    <script defer src="../js/histogram.js"></script>
+    <script defer src="../js/interactions.js"></script>
+    <script defer src="../js/load-data.js"></script>
+</body>
+</html>

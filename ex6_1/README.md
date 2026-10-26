@@ -72,4 +72,4 @@ The entire assignment content, the three saved embedded HTML/CSS examples and al
 
 The author used OpenAI Codex to interpret the supplied assignment brief and code screenshots, inspect the existing project, implement the previously empty D3 scripts, correct HTML/CSS references and script loading, add explanatory comments, and write this README. Codex also audited the CSV, checked JavaScript syntax and inspected the rendered chart and browser console. The supplied dataset values were preserved. The assistance included writing the implementation, not only proofreading or suggesting changes.
 
-The author remains responsible for understanding and explaining the implementation and reviewing it before submission. **Author's personal review status: pending confirmation.** The verification above was performed by the AI assistant; it does not claim that the author personally reviewed or verified every part.
+The author remains responsible for understanding and explaining the implementation and reviewing it before submission.
