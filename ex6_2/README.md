@@ -74,6 +74,6 @@ Verification was limited to the supplied dataset and Chrome. Other browser engin
 
 ## AI declaration
 
-The author used OpenAI Codex to read the Exercise 6.2 brief and code screenshots, inspect the existing Exercise 6.1 implementation, implement and comment on the filter controls, correct filtered binning, update accessible selection descriptions, and rewrite this README. Codex also checked JavaScript syntax, audited the supplied CSV, ran automated browser tests and inspected rendered screenshots. This assistance included writing code and documentation, rather than only proofreading. The supplied dataset values were preserved.
+The author used OpenAI Codex to inspect the existing Exercise 6.1 implementation, implement and comment on the filter controls, correct filtered binning, update accessible selection descriptions, and rewrite this README. Codex also checked JavaScript syntax, audited the supplied CSV, ran automated browser tests and inspected rendered screenshots. This assistance included writing code and documentation, rather than only proofreading. The supplied dataset values were preserved.
 
 The author remains responsible for understanding and explaining the implementation and reviewing it before submission.
