@@ -1,4 +1,4 @@
-// Convert numeric columns in memory; keep the supplied CSV unchanged.
+// COS30045 Data Visualisation
 d3.csv("../data/Ex6_TVdata_withStar.csv", d => ({
     brand: d.brand,
     model: d.model,
@@ -7,12 +7,20 @@ d3.csv("../data/Ex6_TVdata_withStar.csv", d => ({
     star: +d.star,
     energyConsumption: +d.energyConsumption
 })).then(data => {
-    console.log("Loaded TV data:", data);
+    if (!data.length || data.some(d => !d.brand || !d.model ||
+        !["LED", "LCD", "OLED"].includes(d.screenTech) ||
+        !Number.isFinite(d.screenSize) || d.screenSize <= 0 ||
+        !Number.isFinite(d.star) || d.star < 0 ||
+        !Number.isFinite(d.energyConsumption) || d.energyConsumption < 0)) {
+        throw new Error("Expected TV records with valid technology and numeric values.");
+    }
+    d3.select("#filter-count").text(`${d3.format(",")(data.length)} TVs`);
+
     drawHistogram(data);
     drawScatterplot(data);
-    // Build the filters after drawing, so clicks can update existing bars.
+
     populateFilters(data);
-    // Create the tooltip and attach listeners after the circles exist.
+
     createTooltip();
     handleMouseEvents();
 }).catch(error => {

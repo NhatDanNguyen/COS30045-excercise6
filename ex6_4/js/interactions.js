@@ -1,17 +1,21 @@
+// COS30045 Data Visualisation
 const populateFilters = (data) => {
-    // Reuse the chart's fixed scales so technologies can be compared directly.
+
     const updateHistogram = (filterId, data) => {
         const updatedData = filterId === "all"
             ? data
             : data.filter(tv => tv.screenTech === filterId);
         const updatedBins = binGenerator(updatedData);
+        d3.select("#filter-count").text(`${d3.format(",")(updatedData.length)} TVs`);
+        d3.selectAll("#histogram rect title").data(updatedBins)
+            .text(d => `${d.x0}–${d.x1} kWh/year: ${d.length} TVs`);
 
         d3.selectAll("#histogram rect")
             .data(updatedBins)
-            // Start from the current heights if another button is clicked mid-animation.
+
             .interrupt()
             .transition()
-            .duration(500)
+            .duration(window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 500)
             .ease(d3.easeCubicInOut)
             .attr("y", d => yScale(d.length))
             .attr("height", d => innerHeight - yScale(d.length));
@@ -30,7 +34,7 @@ const populateFilters = (data) => {
         .attr("aria-controls", "histogram")
         .text(d => d.label)
         .on("click", (event, d) => {
-            // Clicking the selected button leaves the current filter in place.
+
             if (!d.isActive) {
                 filters_screen.forEach(filter => {
                     filter.isActive = filter.id === d.id;
@@ -46,11 +50,11 @@ const populateFilters = (data) => {
 };
 
 const createTooltip = () => {
-    // Append last so the tooltip appears above the scatterplot's circles.
+
     const tooltip = innerChartS.append("g")
         .attr("class", "tooltip")
         .style("opacity", 0)
-        // The tooltip must not intercept the circle's mouseleave event.
+
         .style("pointer-events", "none");
 
     tooltip.append("rect")
@@ -75,28 +79,37 @@ const handleMouseEvents = () => {
     const tooltip = innerChartS.select(".tooltip");
 
     innerChartS.selectAll("circle")
-        .on("mouseenter", (e, d) => {
-            console.log("Mouse entered circle", d);
+        .on("mouseenter click", (e, d) => {
+
             tooltip.select("text").text(d.screenSize);
 
-            // Read SVG coordinates so positioning also works when it scales.
             const cx = +e.target.getAttribute("cx");
             const cy = +e.target.getAttribute("cy");
-            // Keep the rectangle within the plot at the top and side edges.
+
             const x = Math.max(0, Math.min(innerWidth - tooltipWidth, cx - 0.5 * tooltipWidth));
             const y = Math.max(0, cy - 1.5 * tooltipHeight);
 
             tooltip.interrupt()
                 .attr("transform", `translate(${x}, ${y})`)
                 .transition()
-                .duration(200)
+                .duration(window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 200)
                 .style("opacity", 1);
         })
         .on("mouseleave", (e, d) => {
-            console.log("Mouse left circle", d);
-            // Cancel a pending fade-in, hide, and move away from the plot.
+
             tooltip.interrupt()
                 .style("opacity", 0)
                 .attr("transform", "translate(0, 500)");
         });
 };
+
+document.querySelector("#scatterplot").addEventListener("click", event => {
+    if (event.target.tagName.toLowerCase() !== "circle") {
+        innerChartS.select(".tooltip").interrupt().style("opacity", 0);
+    }
+});
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && innerChartS) {
+        innerChartS.select(".tooltip").interrupt().style("opacity", 0);
+    }
+});

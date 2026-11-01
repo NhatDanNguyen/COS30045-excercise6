@@ -1,5 +1,6 @@
+// COS30045 Data Visualisation
 const drawHistogram = (data) => {
-    // Use a responsive SVG and translate the inner chart by the margins.
+
     const svg = d3.select("#histogram")
         .append("svg")
         .attr("viewBox", `0 0 ${width} ${height}`)
@@ -16,22 +17,18 @@ const drawHistogram = (data) => {
     const innerChart = svg.append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-    // Default D3 binning gives this dataset 14 bins of 200 kWh/year.
     const bins = binGenerator(data);
-    console.log("Histogram bins:", bins);
+    console.table(bins.map(bin => ({ from: bin.x0, to: bin.x1, count: bin.length })));
 
     const minEng = bins[0].x0;
     const maxEng = bins[bins.length - 1].x1;
     const binsMaxLength = d3.max(bins, d => d.length);
-    console.log("minEng:", minEng, "maxEng:", maxEng, "binsMaxLength:", binsMaxLength);
 
-    // Keep the original boundaries when binning a subset. Otherwise D3's
-    // automatic binning could change the intervals while the axes stay fixed.
     binGenerator.domain([minEng, maxEng])
         .thresholds(bins.slice(1).map(d => d.x0));
 
     xScale.domain([minEng, maxEng]).range([0, innerWidth]);
-    // SVG y coordinates increase downwards, so reverse the y range.
+
     yScale.domain([0, binsMaxLength]).range([innerHeight, 0]).nice();
 
     innerChart.selectAll("rect")
@@ -42,9 +39,11 @@ const drawHistogram = (data) => {
         .attr("width", d => xScale(d.x1) - xScale(d.x0))
         .attr("height", d => innerHeight - yScale(d.length))
         .attr("fill", barColor)
-        // Matching the background creates narrow gaps without shifting bins.
+
         .attr("stroke", bodyBackgroundColor)
-        .attr("stroke-width", 2);
+        .attr("stroke-width", 2)
+        .append("title")
+        .text(d => `${d.x0}–${d.x1} kWh/year: ${d.length} TVs`);
 
     innerChart.append("g")
         .attr("class", "x-axis")

@@ -1,5 +1,6 @@
+// COS30045 Data Visualisation
 const drawScatterplot = (data) => {
-    // Reuse the existing dimensions and margin convention for both charts.
+
     const svg = d3.select("#scatterplot")
         .append("svg")
         .attr("viewBox", `0 0 ${width} ${height}`)
@@ -16,17 +17,14 @@ const drawScatterplot = (data) => {
     innerChartS = svg.append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-    // Start at zero and include each maximum, including the supplied outlier.
     xScaleS.domain([0, d3.max(data, d => d.star)])
         .range([0, innerWidth]);
     yScaleS.domain([0, d3.max(data, d => d.energyConsumption)])
         .range([innerHeight, 0]);
 
-    // The ordinal scale deduplicates the categories in first-seen order.
     colorScale.domain(data.map(d => d.screenTech))
         .range(d3.schemeCategory10);
 
-    // One circle per record; transparency reveals overlapping observations.
     innerChartS.selectAll("circle")
         .data(data)
         .join("circle")
@@ -34,7 +32,9 @@ const drawScatterplot = (data) => {
         .attr("cx", d => xScaleS(d.star))
         .attr("cy", d => yScaleS(d.energyConsumption))
         .attr("fill", d => colorScale(d.screenTech))
-        .attr("opacity", 0.5);
+        .attr("opacity", 0.5)
+        .append("title")
+        .text(d => `${d.brand} ${d.model}: ${d.screenSize} inches, ${d.star} stars, ${d.energyConsumption} kWh/year`);
 
     innerChartS.append("g")
         .attr("class", "x-axis")
@@ -56,7 +56,6 @@ const drawScatterplot = (data) => {
         .attr("y", -20)
         .text("Labeled Energy Consumption (kWh/year)");
 
-    // Attach the legend to the outer SVG, matching the brief's example.
     const legend = svg.append("g")
         .attr("class", "legend")
         .attr("transform", `translate(${width - 100}, ${margin.top})`);

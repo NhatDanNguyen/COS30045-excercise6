@@ -1,50 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exercise 6.4 — TV Energy Consumption Tooltips</title>
-    <!-- Paths are relative to this page inside the html folder. -->
-    <link rel="stylesheet" href="../css/base.css">
-    <link rel="stylesheet" href="../css/visualisation.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="COS30045 final Week 6 data visualisation exercises.">
+  <title>Week 6 - Data Visualisation</title>
+  <link rel="stylesheet" href="../assets/site.css">
+  <script defer src="../assets/d3.v7.min.js"></script><script defer src="../js/shared-constants.js"></script><script defer src="../js/histogram.js"></script><script defer src="../js/scatterplot.js"></script><script defer src="../js/interactions.js"></script><script defer src="../js/load-data.js"></script>
 </head>
 <body>
-    <header>
-        <h1>TV Energy Consumption</h1>
-    </header>
-    <main>
-        <div>
-            <h1>Energy Consumption for different TV screen types and sizes</h1>
-            <p>TVs vary considerably in energy consumption.</p>
-        </div>
-
-        <div id="filters_screen" role="group" aria-label="Filter TVs by screen technology"></div>
-        <div id="histogram" class="responsive-svg-container"></div>
-        <p>Hover over a scatterplot point to see its screen size in inches. Colour indicates screen technology.</p>
-        <div id="scatterplot" class="responsive-svg-container"></div>
-        <p id="chart-error" role="alert" hidden></p>
-        <noscript><p>Please enable JavaScript to display the charts.</p></noscript>
-
-        <div class="body">
-            <h3>Data source</h3>
-            <p>
-                <a href="https://data.gov.au/data/dataset/energy-rating-for-household-appliances">
-                    Energy Rating Data for household appliances – Televisions
-                </a><br>
-                Downloaded Jan 2026
-            </p>
-        </div>
-    </main>
-    <footer>
-        <p>&copy; Data Visualisation Week 6</p>
-    </footer>
-
-    <!-- Deferred scripts run in this order, after the page has been parsed. -->
-    <script defer src="https://d3js.org/d3.v7.min.js"></script>
-    <script defer src="../js/shared-constants.js"></script>
-    <script defer src="../js/histogram.js"></script>
-    <script defer src="../js/scatterplot.js"></script>
-    <script defer src="../js/interactions.js"></script>
-    <script defer src="../js/load-data.js"></script>
+  <a class="skip-link" href="#main">Skip to charts</a>
+  <header class="site-header">
+    <h1 class="site-title"><a href="#main">Week 6 - Data Visualisation</a></h1>
+    
+  </header>
+  <main id="main">
+    <section class="exercise" aria-labelledby="histogram-heading">
+      <p class="kicker">Exercises 6.1–6.2 · Histogram and filters</p>
+      <h2 id="histogram-heading">TV energy consumption</h2>
+      <div class="chart-tools">
+        <div id="filters_screen" role="group" aria-label="Filter histogram by screen technology"></div>
+        <span id="filter-count" role="status" aria-live="polite">Loading…</span>
+      </div>
+      <div id="histogram" class="responsive-svg-container chart week6-chart" tabindex="0" aria-label="TV energy histogram, horizontally scrollable on small screens"></div>
+      <p class="note note-mobile">Filters update this histogram; axes stay fixed.</p>
+    </section>
+    <section class="exercise" aria-labelledby="scatter-heading">
+      <p class="kicker">Exercises 6.3–6.4 · Scatterplot and tooltips</p>
+      <h2 id="scatter-heading">Energy use and star rating</h2>
+      <p class="subtitle">All 4,233 TVs. Hover or tap a point for screen size in inches.</p>
+      <div id="scatterplot" class="responsive-svg-container chart week6-chart" tabindex="0" aria-label="TV star rating scatterplot, horizontally scrollable on small screens"></div>
+      <p class="source note-mobile"><a href="https://data.gov.au/data/dataset/energy-rating-for-household-appliances">Energy Rating Data</a> · supplied TV extract. <a class="data-link" href="../data/Ex6_TVdata_withStar.csv" download>CSV ↓</a></p>
+    </section>
+    <p id="chart-error" class="error" role="alert" hidden></p>
+    <noscript><p>Enable JavaScript to display the charts.</p></noscript>
+  </main>
+  <footer><span>COS30045 · Data Visualisation</span></footer>
 </body>
 </html>
