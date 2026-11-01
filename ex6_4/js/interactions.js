@@ -104,7 +104,7 @@ const handleMouseEvents = () => {
 };
 
 document.querySelector("#scatterplot").addEventListener("click", event => {
-    if (event.target.tagName.toLowerCase() !== "circle") {
+    if (innerChartS && event.target.tagName.toLowerCase() !== "circle") {
         innerChartS.select(".tooltip").interrupt().style("opacity", 0);
     }
 });
